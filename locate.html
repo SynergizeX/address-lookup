@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Address Lookup</title>
+</head>
+<body>
+    <h1>Address Lookup</h1>
+    <input type="text" id="addressInput" placeholder="Enter address">
+    <button onclick="lookupAddress()">Lookup</button>
+    <div id="result"></div>
+    <script>
+        function lookupAddress() {
+            var address = document.getElementById('addressInput').value;
+            var apiKey = 'AIzaSyB5DQQRUb1YfQBl7vpGiIplESDH6LMj4SE'; // Your API key
+            var url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'OK') {
+                        var result = data.results[0].formatted_address;
+                        document.getElementById('result').innerText = 'Address: ' + result;
+                    } else {
+                        document.getElementById('result').innerText = 'Address not found.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerText = 'An error occurred.';
+                });
+        }
+    </script>
+</body>
+</html>
