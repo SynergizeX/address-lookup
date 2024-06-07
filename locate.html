@@ -6,15 +6,15 @@
     <script>
         function initAutocomplete() {
             var input = document.getElementById('addressInput');
-            var autocomplete = new google.maps.places.Autocomplete(input);
+            var autocomplete = new google.maps.places.Autocomplete(input, { componentRestrictions: { country: 'ca' } });
 
             autocomplete.addListener('place_changed', function() {
                 var place = autocomplete.getPlace();
-                if (!place.formatted_address) {
+                if (place.formatted_address) {
+                    document.getElementById('result').innerText = 'Address: ' + place.formatted_address;
+                } else {
                     document.getElementById('result').innerText = 'Address not found.';
-                    return;
                 }
-                document.getElementById('result').innerText = 'Address: ' + place.formatted_address;
             });
         }
     </script>
